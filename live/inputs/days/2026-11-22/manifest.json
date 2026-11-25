@@ -14237,6 +14237,702 @@
    "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
    "source": "smard",
    "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T100918Zn0329",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:09:18Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T100918Zn0329",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:09:19Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T100932Zn0331",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:09:33Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T100932Zn0331",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:09:33Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T101001Zn0333",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:10:02Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T101001Zn0333",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:10:02Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T101025Zn0335",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:10:26Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T101025Zn0335",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:10:26Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T101051Zn0337",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:10:52Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T101051Zn0337",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:10:52Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T101113Zn0339",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:11:13Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T101113Zn0339",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:11:14Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T101138Zn0341",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:11:39Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T101138Zn0341",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:11:39Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261125T101201Zn0343",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:12:02Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9.gz",
+   "bytes": 15039,
+   "covers": [
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-21"
+   ],
+   "document_time_utc": "2026-11-21T12:17:02Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261125T101201Zn0343",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-19": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-18T12:00:00Z"
+    },
+    "2026-11-20": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-19T12:00:00Z"
+    },
+    "2026-11-21": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-20T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-16",
+     "2026-11-17",
+     "2026-11-18",
+     "2026-11-19",
+     "2026-11-20",
+     "2026-11-21",
+     "2026-11-22"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1794783600000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-25T10:12:02Z",
+   "role": "bucket",
+   "sha256": "83d1da5e3e2bd51dfb57e837a74c8b9dd69e8af74f22f92a47537564ebcb74d9",
+   "source": "smard",
+   "status": 200
   }
  ],
  "schema": "cp18-live-archive-day-v1"
