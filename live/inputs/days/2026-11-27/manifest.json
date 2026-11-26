@@ -1,0 +1,5456 @@
+{
+ "day": "2026-11-27",
+ "records": [
+  {
+   "body": "bodies/e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1.gz",
+   "bytes": 5980,
+   "covers": [],
+   "document_time_utc": null,
+   "error": null,
+   "id": "price-smard-index-00@20261126T043123Zn0000",
+   "input": "price_index",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {},
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "metadata"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/index_quarterhour.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-26T04:31:23Z",
+   "role": "index",
+   "sha256": "e6b5c9a511efe97a1f563dd2ea19004a452aeda43a8c50ee0cde8f4b7b4f59e1",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/352936f2718b39c6e7a534db139d977333de2ad770c38b52e2653a1633fffe98.gz",
+   "bytes": 14890,
+   "covers": [
+    "2026-11-24",
+    "2026-11-25",
+    "2026-11-26"
+   ],
+   "document_time_utc": "2026-11-25T13:39:16Z",
+   "error": null,
+   "id": "price-smard-bucket-01@20261126T043123Zn0000",
+   "input": "price",
+   "note": "",
+   "origin": "smard retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-24": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-23T12:00:00Z"
+    },
+    "2026-11-25": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-24T12:00:00Z"
+    },
+    "2026-11-26": {
+     "basis": "tier 2 (ruling 2): SDAC results for delivery day P are published no later than one hour after the 12:00 gate on P-1, so by 13:00 Europe/Berlin (Reg. 543/2013 Art. 12(1)(d); CACM Arts. 47-48; the tier register)",
+     "basis_id": "documented_schedule",
+     "utc": "2026-11-25T12:00:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-23",
+     "2026-11-24",
+     "2026-11-25",
+     "2026-11-26",
+     "2026-11-27",
+     "2026-11-28",
+     "2026-11-29"
+    ],
+    "url": "https://www.smard.de/app/chart_data/4169/DE-LU/4169_DE-LU_quarterhour_1795388400000.json"
+   },
+   "resolution": "quarterhour",
+   "retrieved_utc": "2026-11-26T04:31:24Z",
+   "role": "bucket",
+   "sha256": "352936f2718b39c6e7a534db139d977333de2ad770c38b52e2653a1633fffe98",
+   "source": "smard",
+   "status": 200
+  },
+  {
+   "body": "bodies/e0d6764f616ea4339470137267326f9f57c47de220ec9c54544cfa5a6e5f2234.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T04:31:33Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T043124Zn0002",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T04:31:33Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "role": "document",
+   "sha256": "e0d6764f616ea4339470137267326f9f57c47de220ec9c54544cfa5a6e5f2234",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/31f1ba7267ad38df6ed96ff74ad69e4ba745118b48962182eefa00ff3ee3a861.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f021",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;80c6f3d537fa8d94be1b67e507d07335&quot;",
+     "size": 41254,
+     "utc": "2026-11-26T03:52:40Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;9745daa9acaa9c13a936478227b7e46c&quot;",
+     "size": 542205477,
+     "utc": "2026-11-26T03:52:02Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "sha256": "31f1ba7267ad38df6ed96ff74ad69e4ba745118b48962182eefa00ff3ee3a861",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/1a586049500746d03d5b2ca9f8ab2ff821c114b24352d67fa3178dfaeac4ecf8.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f024",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;7a6ac6d40baf57f737b22831576671a1&quot;",
+     "size": 41250,
+     "utc": "2026-11-26T03:37:46Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;223f6126a751da9f2a1cd83503232e1f&quot;",
+     "size": 542685602,
+     "utc": "2026-11-26T03:37:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "1a586049500746d03d5b2ca9f8ab2ff821c114b24352d67fa3178dfaeac4ecf8",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/b4fd3d215fcbd76a28513c6c1706112de4079bc031714aeea69738a0c876e47a.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f027",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;55a1ce366fb6e8e36afeb6bc7c5973b3&quot;",
+     "size": 41254,
+     "utc": "2026-11-26T03:38:40Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;8f008a703c449803b57b0080ce579b71&quot;",
+     "size": 541763723,
+     "utc": "2026-11-26T03:38:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "b4fd3d215fcbd76a28513c6c1706112de4079bc031714aeea69738a0c876e47a",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/ddab1a0acee05f0e2c778f5095c8a7301e98e90faedaf29d52ca3595568ed7dd.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f030",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;fc1ad1d9dd7b3c0fdf97a4adaa613c69&quot;",
+     "size": 41255,
+     "utc": "2026-11-26T03:39:58Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;51c1bbbcc98e20baa93ff778247d7f57&quot;",
+     "size": 542192672,
+     "utc": "2026-11-26T03:39:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "ddab1a0acee05f0e2c778f5095c8a7301e98e90faedaf29d52ca3595568ed7dd",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/e0f3d0dba2aee6edbe3ee3e836854be57e868cfec04868a002abe8f2d64be052.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f033",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;60857a8300ef634457236513e5e6f729&quot;",
+     "size": 41256,
+     "utc": "2026-11-26T03:40:47Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;21416d30560e314d51a0fd0366097a64&quot;",
+     "size": 542107251,
+     "utc": "2026-11-26T03:40:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "e0f3d0dba2aee6edbe3ee3e836854be57e868cfec04868a002abe8f2d64be052",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/0b723e45d90c2441c2aeca23beb2c4f6eb9c387d14c4db23cfa23f26a4a85304.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f036",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;6631ed95caf124366a88f435cf67cd3e&quot;",
+     "size": 41254,
+     "utc": "2026-11-26T03:44:06Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;c66cd967c197fb0c32b229bc21a872c8&quot;",
+     "size": 538782128,
+     "utc": "2026-11-26T03:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "0b723e45d90c2441c2aeca23beb2c4f6eb9c387d14c4db23cfa23f26a4a85304",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/67c633b7806b418dc5403692074ee471d00284664bd09a7a644e08f5ca7828e4.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f039",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;1a585a837f57547f589d3c42828c8c99&quot;",
+     "size": 41256,
+     "utc": "2026-11-26T03:42:11Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;96ebf5e46910bbe8596258cc9b70dabd&quot;",
+     "size": 539221151,
+     "utc": "2026-11-26T03:41:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "67c633b7806b418dc5403692074ee471d00284664bd09a7a644e08f5ca7828e4",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/74109aaa35639bf66460cc3bb39f7e02716288e608744cd46f2af0c008a9b38e.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f042",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;db0033567add2b032919dd3ddc0119d1&quot;",
+     "size": 41253,
+     "utc": "2026-11-26T03:46:13Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;1fdbdcc8f52609d81f03cbd61fa37960&quot;",
+     "size": 540763026,
+     "utc": "2026-11-26T03:45:48Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "74109aaa35639bf66460cc3bb39f7e02716288e608744cd46f2af0c008a9b38e",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/65574fb2d381f318af9581f262f5eda6a92e7fce5abe230a302523920f5d3075.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f045",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;375c852d4a647c6e8afb7d2a4f1de2d9&quot;",
+     "size": 41253,
+     "utc": "2026-11-26T03:43:16Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;465b2003163d67be6ecaa637fc0a1e18&quot;",
+     "size": 540330609,
+     "utc": "2026-11-26T03:42:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "65574fb2d381f318af9581f262f5eda6a92e7fce5abe230a302523920f5d3075",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/dde3499adc0e779fcb3c3a915b47b87c5b08ac2392fac30af358d1b6b4ce332b.gz",
+   "bytes": 959,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-listing-f048",
+   "input": "gfs_listing",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;c6c5b79b8401b7cbf1edae417c3a3280&quot;",
+     "size": 41250,
+     "utc": "2026-11-26T03:44:13Z"
+    },
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "etag": "&quot;e26bbbdfe1d9ab5a72a2051fbc31893c&quot;",
+     "size": 545609017,
+     "utc": "2026-11-26T03:43:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "list-type": "2",
+     "prefix": "gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+    },
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "dde3499adc0e779fcb3c3a915b47b87c5b08ac2392fac30af358d1b6b4ce332b",
+   "source": "aws",
+   "status": 200
+  },
+  {
+   "body": "bodies/e9f6d8c0601dd1cbf4e27c33d4f3a1ae0a68eae2e7965f29902fdbb04f529ce9.gz",
+   "bytes": 41254,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f021",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:52:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "sha256": "e9f6d8c0601dd1cbf4e27c33d4f3a1ae0a68eae2e7965f29902fdbb04f529ce9",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425754826:d=2026112600:UGRD:10 m above ground:21 hour fcst:",
+    "589:426720742:d=2026112600:VGRD:10 m above ground:21 hour fcst:",
+    "653:465179937:d=2026112600:DSWRF:surface:18-21 hour ave fcst:",
+    "689:500847432:d=2026112600:UGRD:100 m above ground:21 hour fcst:",
+    "690:501823490:d=2026112600:VGRD:100 m above ground:21 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 822381,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:52:02Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     465179937,
+     466002317
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "506ec3a942315d8f9bc67ba0ccdcbae99af51ba285836749eb8347ae387ee4f4",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 965916,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:52:02Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425754826,
+     426720741
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "sha256": "dd563adcdd794773dbc85cc5dd4f176fc92d556ed1e7766d268fbbee8f4d9f61",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 976058,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:52:02Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     500847432,
+     501823489
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "sha256": "4de0276de03a3c22b47116f4a56fffe6745f9f3c4bd38d8e6b54c54fc02efcfb",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 944423,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:52:02Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426720742,
+     427665164
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "sha256": "5e56ccc28dc948473c269b6a9b4b5856e62e769b5fd6d9ae5f036ab1ac26f15a",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 963898,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f021-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:52:02Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501823490,
+     502787387
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f021"
+   },
+   "retrieved_utc": "2026-11-26T04:31:33Z",
+   "sha256": "e4e823fd0f5d197df4d7edd932048fa76c06c6c22d55a000e3e1cc2f19259d84",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/ee9cb4b8ad01ac11e8c6cda71950af46ebe22ba0c41410f00d694415ef1ddb48.gz",
+   "bytes": 41250,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f024",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:37:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "ee9cb4b8ad01ac11e8c6cda71950af46ebe22ba0c41410f00d694415ef1ddb48",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:424589278:d=2026112600:UGRD:10 m above ground:24 hour fcst:",
+    "589:425547594:d=2026112600:VGRD:10 m above ground:24 hour fcst:",
+    "653:465281548:d=2026112600:DSWRF:surface:18-24 hour ave fcst:",
+    "689:501016464:d=2026112600:UGRD:100 m above ground:24 hour fcst:",
+    "690:501985038:d=2026112600:VGRD:100 m above ground:24 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 916062,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:37:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     465281548,
+     466197609
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "ec001d41662ae393f553b7264031a239d41e033dc574acce7073d81d2ae7617a",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 958316,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:37:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     424589278,
+     425547593
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "124fc5f4ce5d57c3208b66d7824649491a7e1010e3e3b4f6c5d7d51577255c6c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 968574,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:37:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501016464,
+     501985037
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "b77f378ca6d045a51c187683b73f4a0b6cfc38858d54540834ced16f0ca72ad9",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 935974,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:37:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425547594,
+     426483567
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "28a5c7fc1fe08f827d2d474b60c14cc413525224dd0f9f29c3b23af8764ac9d9",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959714,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f024-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:37:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501985038,
+     502944751
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f024"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "2d357c4493ad0b6f1d601041df4183f49b08bf8e9ed5755715b900373a214ab2",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/0fb4cef0f7bdd6c1d6c7f941a02113e70b7500aec1ba28f2d2cf7f77a13752ae.gz",
+   "bytes": 41254,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f027",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:38:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "0fb4cef0f7bdd6c1d6c7f941a02113e70b7500aec1ba28f2d2cf7f77a13752ae",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425214987:d=2026112600:UGRD:10 m above ground:27 hour fcst:",
+    "589:426172138:d=2026112600:VGRD:10 m above ground:27 hour fcst:",
+    "653:464529889:d=2026112600:DSWRF:surface:24-27 hour ave fcst:",
+    "689:499867933:d=2026112600:UGRD:100 m above ground:27 hour fcst:",
+    "690:500834456:d=2026112600:VGRD:100 m above ground:27 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 807846,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:38:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     464529889,
+     465337734
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "336296aea0a1ad5e554c207a541e4d0373e1c4fa41967dd4d16074b4d0ee2278",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957151,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:38:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425214987,
+     426172137
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "0213bb1a896bfc09d83ef48b96fe9fdc5275d5f2461debc820ff0bb42a26f045",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 966523,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:38:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     499867933,
+     500834455
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "89d7d59719b77565842844c0b750b17c16dd3d897f2f5493d10449df198e3609",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 934531,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:38:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426172138,
+     427106668
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "af392c37e434a055fd2539c1fad4907ce9009003ef754ff47c89e2bb12189a0e",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 953577,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f027-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:38:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     500834456,
+     501788032
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f027"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "c9ca98791f969d619055f1da4d6b17eba365afa4e23c596c0561b2a2a3c21bfc",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/b415cb1d993b3eb850218711d8df3aef1a003b0822c6c4ce749d6ea9aa032e83.gz",
+   "bytes": 41255,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f030",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:39:58Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "b415cb1d993b3eb850218711d8df3aef1a003b0822c6c4ce749d6ea9aa032e83",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:423918858:d=2026112600:UGRD:10 m above ground:30 hour fcst:",
+    "589:424876525:d=2026112600:VGRD:10 m above ground:30 hour fcst:",
+    "653:464636619:d=2026112600:DSWRF:surface:24-30 hour ave fcst:",
+    "689:500315589:d=2026112600:UGRD:100 m above ground:30 hour fcst:",
+    "690:501286087:d=2026112600:VGRD:100 m above ground:30 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 902090,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:39:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     464636619,
+     465538708
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "e348d19df47e74436a1b3b79551732f7fe9482b3d7ed33c8c2c26df203eee055",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957667,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:39:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     423918858,
+     424876524
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "880e41ffbfb9e6a581d56119b35568ef5cf6229b49b4ab99a3a05ad7b7becaee",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 970498,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:39:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     500315589,
+     501286086
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "67e86e07de5515bca83305030eba304fc6f51a28da597aa0fad0278f998a9aca",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 935964,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:39:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     424876525,
+     425812488
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-26T04:31:34Z",
+   "sha256": "15b0fda0e8f04df5c336cbd33035504a430d08d88e9c317078dccb4e05200012",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 958035,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f030-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:39:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501286087,
+     502244121
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f030"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "ec118d8f58264ea003f5e5149076614e6a0635273205399a887e0ead11dfe55e",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/3536d33ecc2ffab0f3230ae38c180b4d7a94f37a3e1ed8b3a701e1a8c99c2bb1.gz",
+   "bytes": 41256,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f033",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:40:47Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "3536d33ecc2ffab0f3230ae38c180b4d7a94f37a3e1ed8b3a701e1a8c99c2bb1",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:425319242:d=2026112600:UGRD:10 m above ground:33 hour fcst:",
+    "589:426278750:d=2026112600:VGRD:10 m above ground:33 hour fcst:",
+    "653:465056983:d=2026112600:DSWRF:surface:30-33 hour ave fcst:",
+    "689:500512350:d=2026112600:UGRD:100 m above ground:33 hour fcst:",
+    "690:501484152:d=2026112600:VGRD:100 m above ground:33 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 803415,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:40:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     465056983,
+     465860397
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "13aa6b56de33f34f2a7c0b6cb22213cca8b506974665047d1658fe90604984d1",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959508,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:40:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     425319242,
+     426278749
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "1788b9c4794f0d93d411aa99ea42f0076a1db3578e4a05a9ef3b83af96b40dfe",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 971802,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:40:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     500512350,
+     501484151
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "d75a0b5fc4f521c26d70bc8a54d58fb14daae2f1ed076c880ae9fb6cd3039c9c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 936496,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:40:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426278750,
+     427215245
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "ffde63067e1207c068a2115488ee97b44c33e38dd56accd73e1917fe7b53f023",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957520,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f033-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:40:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     501484152,
+     502441671
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f033"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "23642ec067af11c6513b8342fc5c51ee2cedef7321bf73525428d96c145b58a3",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/0c66400df51ced368bbe8b9fb29fe8b3ee70776e1d25d0b284dd93433aa074f8.gz",
+   "bytes": 41254,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f036",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:44:06Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "0c66400df51ced368bbe8b9fb29fe8b3ee70776e1d25d0b284dd93433aa074f8",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:420546467:d=2026112600:UGRD:10 m above ground:36 hour fcst:",
+    "589:421512528:d=2026112600:VGRD:10 m above ground:36 hour fcst:",
+    "653:461560113:d=2026112600:DSWRF:surface:30-36 hour ave fcst:",
+    "689:497230763:d=2026112600:UGRD:100 m above ground:36 hour fcst:",
+    "690:498204110:d=2026112600:VGRD:100 m above ground:36 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 909458,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     461560113,
+     462469570
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "3959109762861f4c2378a1dfe2eff17d52322e37fa67caa23ba91c75b5c44bdb",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 966061,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     420546467,
+     421512527
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "28c074649c227c4a495747e16c2c2408f8827c901ecc9bd05e6b5a6260204e7d",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 973347,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     497230763,
+     498204109
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "f2df65c7396fb20c770a45cc5eeaa50d2e97d23a4a60f1e71339b632f927cfcf",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 942005,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     421512528,
+     422454532
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "00b5671abb9c9947c3d386133d72306fd94860484fb417ab41e1c14a1aa1e7d7",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 954693,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f036-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     498204110,
+     499158802
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f036"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "637a3e0ddb03951e96f37c5cab7c6f1a2a3c721d657c1aeb7ae2104292e0c298",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/3d99ab62336fd49e05dd7ed931ae928ab132b3d84ebd3ae7f304012340fb4d7e.gz",
+   "bytes": 41256,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f039",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:42:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "3d99ab62336fd49e05dd7ed931ae928ab132b3d84ebd3ae7f304012340fb4d7e",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:422176069:d=2026112600:UGRD:10 m above ground:39 hour fcst:",
+    "589:423145743:d=2026112600:VGRD:10 m above ground:39 hour fcst:",
+    "653:462011884:d=2026112600:DSWRF:surface:36-39 hour ave fcst:",
+    "689:497546318:d=2026112600:UGRD:100 m above ground:39 hour fcst:",
+    "690:498523948:d=2026112600:VGRD:100 m above ground:39 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 817239,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:41:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     462011884,
+     462829122
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "75ef6fe865a399535348e867c6591a14d31f69863d82650ad94e64eefd12baa2",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 969674,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:41:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     422176069,
+     423145742
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-26T04:31:35Z",
+   "sha256": "f1cb9c9aaefe4d4c02d9cab68d8a3cc93c5cf0661f57be815e111f5e48177a2d",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 977630,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:41:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     497546318,
+     498523947
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "99c9e8ab9adccf0c588db90f9114a1fea36d51b07afe92c0a596da8fb26fd9ca",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 940627,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:41:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     423145743,
+     424086369
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "8f652b192fa559de7e1e0985a2f57f417edbecdf155fcb809b4e61e1814a697d",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 962637,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f039-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:41:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     498523948,
+     499486584
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f039"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "92ac6c88a8b2ed86338419b223721058fa7c01869e4fc40aff9708fb05c111dc",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/d3cd214f350d65610d015688c1870d5ff05a0e7c0d2eaee6e6fedc1014f3277b.gz",
+   "bytes": 41253,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f042",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:46:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "d3cd214f350d65610d015688c1870d5ff05a0e7c0d2eaee6e6fedc1014f3277b",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:421846554:d=2026112600:UGRD:10 m above ground:42 hour fcst:",
+    "589:422810498:d=2026112600:VGRD:10 m above ground:42 hour fcst:",
+    "653:463172784:d=2026112600:DSWRF:surface:36-42 hour ave fcst:",
+    "689:498861974:d=2026112600:UGRD:100 m above ground:42 hour fcst:",
+    "690:499835676:d=2026112600:VGRD:100 m above ground:42 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 921098,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:45:48Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     463172784,
+     464093881
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "dc4ae735bff9a4d853ad6ce6b089880dde2619dad97a917318006e39cdfc9770",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 963944,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:45:48Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     421846554,
+     422810497
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "a1e166fdf8cbdc6c3e0f4c665654429c62023d6f6c18436609b8afea421bec76",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 973702,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:45:48Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     498861974,
+     499835675
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "c311014b48223791a959b8b020c2336d80ab743c182ac1c07207a802d91f137c",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 942291,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:45:48Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     422810498,
+     423752788
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "004b382a21c37b5628652c595a4412158b2f89cb37817e6b2b89488e76b278dc",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 960690,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f042-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:45:48Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     499835676,
+     500796365
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f042"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "4566fd04f7a3f7277cad536e1069ca373fea7bde8452d63eef268c3c5d81ee4e",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/cb15ad6708bec9c2e02ef7a4699371ed2d9e65482eb97e9f6a6965bbbdb6b3b9.gz",
+   "bytes": 41253,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f045",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:16Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "cb15ad6708bec9c2e02ef7a4699371ed2d9e65482eb97e9f6a6965bbbdb6b3b9",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:422973421:d=2026112600:UGRD:10 m above ground:45 hour fcst:",
+    "589:423935076:d=2026112600:VGRD:10 m above ground:45 hour fcst:",
+    "653:463573486:d=2026112600:DSWRF:surface:42-45 hour ave fcst:",
+    "689:499057827:d=2026112600:UGRD:100 m above ground:45 hour fcst:",
+    "690:500033315:d=2026112600:VGRD:100 m above ground:45 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 831117,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:42:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     463573486,
+     464404602
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "f9a935275658b07a0a38cfff96901d6a8ed5cc2513d127357e6727afd56d358b",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 961655,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:42:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     422973421,
+     423935075
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "8e7c51e07814c24550d740b6741b304eb06cdc215eb688d56743f67b037df2d5",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 975488,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:42:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     499057827,
+     500033314
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "4741a351c7c832f1222632b3446fbf80f131b7888a78c3fe7e6b0373f09acdc8",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 939521,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:42:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     423935076,
+     424874596
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "61bf4e4fca76e97f34fa0f9c5ebe7064970336d5dcc1a1820acbc29d449be16b",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 962662,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f045-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:42:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     500033315,
+     500995976
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f045"
+   },
+   "retrieved_utc": "2026-11-26T04:31:36Z",
+   "sha256": "8e39cd3450953a3b5f6af0a6f3b932dbb45aa1d5ebfe019f777bda520cf31059",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": "bodies/f84f23f33fd0f0b7e013f6c563e5e20d5167729de096084857076f90b0fca3bf.gz",
+   "bytes": 41250,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-index-f048",
+   "input": "gfs_index",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "provenance": "live",
+   "publication": {
+    "index": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:44:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": null,
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048.idx"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "sha256": "f84f23f33fd0f0b7e013f6c563e5e20d5167729de096084857076f90b0fca3bf",
+   "source": "aws",
+   "status": 200,
+   "target_lines": [
+    "588:426469776:d=2026112600:UGRD:10 m above ground:48 hour fcst:",
+    "589:427427180:d=2026112600:VGRD:10 m above ground:48 hour fcst:",
+    "653:468464935:d=2026112600:DSWRF:surface:42-48 hour ave fcst:",
+    "689:504026985:d=2026112600:UGRD:100 m above ground:48 hour fcst:",
+    "690:504995276:d=2026112600:VGRD:100 m above ground:48 hour fcst:"
+   ]
+  },
+  {
+   "body": null,
+   "bytes": 917889,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-dswrf",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.02,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     468464935,
+     469382823
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "sha256": "3bb8cbcb9686274f8a6793fc174f7afc831e236922ce708a9ead63690c239a58",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 957404,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-u10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     426469776,
+     427427179
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "sha256": "754185c6b6f737df76e7e4be8ed3bd07da383d38b7296eb685f121858e6f97e8",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 968291,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-u100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     504026985,
+     504995275
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "sha256": "c4e003230bec63fe015a468b6de0e228dc62f3e96ab66aa966373e8d8eb2efde",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 935966,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-v10",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     427427180,
+     428363145
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "sha256": "5ce5fefa8a346f673dd14b0fde05fa037eec9e9c1a83b24039a3450e73b01cb1",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 959202,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "id": "gfs-message-f048-v100",
+   "input": "gfs_message",
+   "local_only": true,
+   "note": "raw GRIB2 message kept outside the archive; hash and size only",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "packing_quantum": 0.01,
+   "provenance": "live",
+   "publication": {
+    "object": {
+     "basis": "AWS LastModified (ListObjectsV2)",
+     "basis_id": "aws_last_modified",
+     "utc": "2026-11-26T03:43:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": null,
+    "headers": {},
+    "method": "GET",
+    "params": {},
+    "range": [
+     504995276,
+     505954477
+    ],
+    "scope": [
+     "gfs"
+    ],
+    "url": "https://noaa-gfs-bdp-pds.s3.amazonaws.com/gfs.20261126/00/atmos/gfs.t00z.pgrb2.0p25.f048"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "sha256": "3695970c2008c3d8dd67b5e7e428b1b7544dbe0666cfdeddb9734904ec35215a",
+   "source": "aws",
+   "status": 206
+  },
+  {
+   "body": null,
+   "bytes": 166878,
+   "checks": {
+    "decoded": true,
+    "listed": 20,
+    "messages": 50,
+    "version": "v16"
+   },
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": null,
+   "files": {
+    "gfs/runs/2026-11-26.json": {
+     "bytes": 97605,
+     "sha256": "b3966d82749e330d545faf056238b15a65b9fb197b97e465244624ca4cb8bb85"
+    },
+    "gfs/runs/2026-11-26.npz": {
+     "bytes": 166878,
+     "sha256": "923fdbea20ca1be9f41f5a0be99bcdd42469887f11ebd344babefa32d36397da"
+    }
+   },
+   "id": "gfs-run-2026-11-26",
+   "input": "gfs_run",
+   "note": "",
+   "origin": "GFS client retrieval (listing, index, byte ranges) and CP-20 decoder",
+   "problems": [],
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "AWS LastModified of the run's 10 objects and 10 indexes (ruling 4's criterion)",
+     "basis_id": "aws_last_modified",
+     "evidence": {
+      "objects_listed": 20
+     },
+     "utc": "2026-11-26T03:52:40Z"
+    }
+   },
+   "request": {
+    "fields": 5,
+    "leads": [
+     21,
+     48
+    ],
+    "run": "2026-11-26"
+   },
+   "retrieved_utc": "2026-11-26T04:31:37Z",
+   "run": "2026-11-26",
+   "sha256": "923fdbea20ca1be9f41f5a0be99bcdd42469887f11ebd344babefa32d36397da",
+   "source": "aws",
+   "status": null
+  },
+  {
+   "body": "bodies/5258b298beb868cbede592dc51d6217729b44ae3a42d6ba8ae9a486f20ef70cd.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T04:36:45Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T043639Zn0074",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T04:36:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T04:36:45Z",
+   "role": "document",
+   "sha256": "5258b298beb868cbede592dc51d6217729b44ae3a42d6ba8ae9a486f20ef70cd",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/612afae1374a8758ca6b3882e706659dba56d652e3d697221a22f897a2612860.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T04:41:46Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T044145Zn0075",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T04:41:46Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T04:41:46Z",
+   "role": "document",
+   "sha256": "612afae1374a8758ca6b3882e706659dba56d652e3d697221a22f897a2612860",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/f5d5e8dd97e4836b893d8d5f5f8af6d12a4e2fe56b333cc8212bf846cde01b96.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T04:46:58Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T044646Zn0076",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T04:46:58Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T04:46:58Z",
+   "role": "document",
+   "sha256": "f5d5e8dd97e4836b893d8d5f5f8af6d12a4e2fe56b333cc8212bf846cde01b96",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/6e8d54b2f8b0ef89c25e071cc222d99672791672e18700454e3f6b1a9e5acb73.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T04:52:06Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T045158Zn0077",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "retrieved and archived by the pipeline at this instant",
+     "basis_id": "retrieval_time",
+     "utc": "2026-11-26T04:52:05Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T04:52:05Z",
+   "role": "document",
+   "sha256": "6e8d54b2f8b0ef89c25e071cc222d99672791672e18700454e3f6b1a9e5acb73",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/1ce0f5bda65fb097ba678ff075543d060f1bb42d7e3f161caa8059b09b57a53d.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T04:57:09Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T045706Zn0078",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T04:57:09Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T04:57:09Z",
+   "role": "document",
+   "sha256": "1ce0f5bda65fb097ba678ff075543d060f1bb42d7e3f161caa8059b09b57a53d",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/1c5985f0159d78695152769b592df218b4e1a09b73af683e42652f55767420fe.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:02:23Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T050209Zn0079",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:02:23Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:02:23Z",
+   "role": "document",
+   "sha256": "1c5985f0159d78695152769b592df218b4e1a09b73af683e42652f55767420fe",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/72f10ef8d7e67508055024c82e26d33941681c5dc83783f0cd3b9573cad94497.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:07:39Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T050724Zn0080",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:07:39Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:07:39Z",
+   "role": "document",
+   "sha256": "72f10ef8d7e67508055024c82e26d33941681c5dc83783f0cd3b9573cad94497",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/3547d109b07ddca1d94a95880b60282e4e26a38ea5c70934810cd71d7878230c.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:12:55Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T051239Zn0081",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:12:55Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:12:55Z",
+   "role": "document",
+   "sha256": "3547d109b07ddca1d94a95880b60282e4e26a38ea5c70934810cd71d7878230c",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/55a0beadca480d6507cd86a8d7877bcbfeaf05d4fc8e077fb90a7bd082c4ff2e.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:18:11Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T051755Zn0082",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:18:11Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:18:11Z",
+   "role": "document",
+   "sha256": "55a0beadca480d6507cd86a8d7877bcbfeaf05d4fc8e077fb90a7bd082c4ff2e",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/86392d421dd925df90a2d59f15da79f43c73261b3f459018ce619a77ad5f6f24.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:23:14Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T052312Zn0083",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:23:14Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:23:14Z",
+   "role": "document",
+   "sha256": "86392d421dd925df90a2d59f15da79f43c73261b3f459018ce619a77ad5f6f24",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/03bdb980e1706b5b75903581dc3f5b2689ddb6ee0ddacbd130afe77db460c6cc.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:28:26Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T052814Zn0084",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "retrieved and archived by the pipeline at this instant",
+     "basis_id": "retrieval_time",
+     "utc": "2026-11-26T05:28:25Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:28:25Z",
+   "role": "document",
+   "sha256": "03bdb980e1706b5b75903581dc3f5b2689ddb6ee0ddacbd130afe77db460c6cc",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/3c919d45f2fab3d857f26e5a894fd757bccda302b10e0e45adddb9e12c39d613.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:33:28Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T053326Zn0085",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:33:28Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:33:30Z",
+   "role": "document",
+   "sha256": "3c919d45f2fab3d857f26e5a894fd757bccda302b10e0e45adddb9e12c39d613",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/e466efe0940c80b8b16c9a83e832edb4e306c12323fa61bb514ee15d2f01aaed.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:38:35Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T053830Zn0086",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:38:35Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:38:35Z",
+   "role": "document",
+   "sha256": "e466efe0940c80b8b16c9a83e832edb4e306c12323fa61bb514ee15d2f01aaed",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/36907d98bb08152dcbeb3fc363274710b606b3fc8dfcca3de40eee5103040491.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:43:40Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T054336Zn0087",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:43:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:43:40Z",
+   "role": "document",
+   "sha256": "36907d98bb08152dcbeb3fc363274710b606b3fc8dfcca3de40eee5103040491",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/ac763d039eb4c23eb1cfcd65259e44af7700101255e9d3bc35ff7b9a682de536.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:48:41Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T054840Zn0088",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:48:41Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:48:41Z",
+   "role": "document",
+   "sha256": "ac763d039eb4c23eb1cfcd65259e44af7700101255e9d3bc35ff7b9a682de536",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/6179bae60027680203bec102fc88d9ba81803b347645339ba34b6523994cbce2.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:53:42Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T055341Zn0089",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:53:42Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:53:42Z",
+   "role": "document",
+   "sha256": "6179bae60027680203bec102fc88d9ba81803b347645339ba34b6523994cbce2",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/9107d26cdc5de44286511d6269d79076844507d7961976252a179fe6c5662f6e.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T05:58:50Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T055843Zn0090",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T05:58:50Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T05:58:50Z",
+   "role": "document",
+   "sha256": "9107d26cdc5de44286511d6269d79076844507d7961976252a179fe6c5662f6e",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/a2873ce23ce76ed61702dd936835d6ccbfb2b21071a38fcded3ef4dfde79ac79.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:04:00Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T060350Zn0091",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:04:00Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:04:00Z",
+   "role": "document",
+   "sha256": "a2873ce23ce76ed61702dd936835d6ccbfb2b21071a38fcded3ef4dfde79ac79",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/16fc1b6a6560d33e44770e88fadadb11eab895feaa4d03b6977d949bf99ea492.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:09:07Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T060900Zn0092",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:09:07Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:09:07Z",
+   "role": "document",
+   "sha256": "16fc1b6a6560d33e44770e88fadadb11eab895feaa4d03b6977d949bf99ea492",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/8deb973e60761536e7969bfddd69ca06be9450e065cea3def8155ec0cea78dc3.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:14:13Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T061407Zn0093",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:14:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:14:13Z",
+   "role": "document",
+   "sha256": "8deb973e60761536e7969bfddd69ca06be9450e065cea3def8155ec0cea78dc3",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/1111e2e3d1fbd16bfe92db98b5f707bef170d6ae4e2fa96f6f62d03148721db8.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:19:16Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T061913Zn0094",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:19:16Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:19:16Z",
+   "role": "document",
+   "sha256": "1111e2e3d1fbd16bfe92db98b5f707bef170d6ae4e2fa96f6f62d03148721db8",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/79a73e300c2f66da8cbc107ec2b9031b850df4dd4056f05a276dc037b5075f2e.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:24:27Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T062416Zn0095",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:24:27Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:24:27Z",
+   "role": "document",
+   "sha256": "79a73e300c2f66da8cbc107ec2b9031b850df4dd4056f05a276dc037b5075f2e",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/81a5e25d327ac2817905de712041965e7db17a34458d64f386557e3fc8c745bc.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:29:37Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T062927Zn0096",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:29:37Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:29:37Z",
+   "role": "document",
+   "sha256": "81a5e25d327ac2817905de712041965e7db17a34458d64f386557e3fc8c745bc",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/5a50bef70b8ba3653bd62463562c757e855d24881c2f1b08c602fc5b4589eb41.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:34:40Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T063437Zn0097",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:34:40Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:34:40Z",
+   "role": "document",
+   "sha256": "5a50bef70b8ba3653bd62463562c757e855d24881c2f1b08c602fc5b4589eb41",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/e520272c601e3e74d3e8a8a0fe2e0a22a7a3a921177882bc0e5a5258d2390eff.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:39:42Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T063940Zn0098",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:39:42Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:39:42Z",
+   "role": "document",
+   "sha256": "e520272c601e3e74d3e8a8a0fe2e0a22a7a3a921177882bc0e5a5258d2390eff",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/ebcbeebb4596272486224ea4f648cb722350176b8a1aab6d22559b4f3a7c9b75.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:44:47Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T064442Zn0099",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:44:47Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:44:47Z",
+   "role": "document",
+   "sha256": "ebcbeebb4596272486224ea4f648cb722350176b8a1aab6d22559b4f3a7c9b75",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/2acfc44ded00c7093ffd7a64756189655bd205ca9983033d9c1d3778ae35a294.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:49:52Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T064947Zn0100",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:49:52Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:49:52Z",
+   "role": "document",
+   "sha256": "2acfc44ded00c7093ffd7a64756189655bd205ca9983033d9c1d3778ae35a294",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/2340ed9a03461f3951cd4f0bf60453d412f7ee1eb0b386a0b68af732f94c7ab7.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:54:53Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T065452Zn0101",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:54:53Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:54:53Z",
+   "role": "document",
+   "sha256": "2340ed9a03461f3951cd4f0bf60453d412f7ee1eb0b386a0b68af732f94c7ab7",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/5b3eba1e09b82ea0be696e223a20669f887c7e701770e48df323007a0d498734.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T06:59:55Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T065953Zn0102",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T06:59:55Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T06:59:55Z",
+   "role": "document",
+   "sha256": "5b3eba1e09b82ea0be696e223a20669f887c7e701770e48df323007a0d498734",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/809fac4d8a9a44a32948d178df55391a8a8c54494aef4d3baa7368f7883ea670.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:05:07Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T070456Zn0103",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:05:07Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:05:07Z",
+   "role": "document",
+   "sha256": "809fac4d8a9a44a32948d178df55391a8a8c54494aef4d3baa7368f7883ea670",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/318644c11fc7c3e70ed10e70c580517401ca991b896cd06b74e52ba62c575455.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:10:12Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T071008Zn0104",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:10:12Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:10:12Z",
+   "role": "document",
+   "sha256": "318644c11fc7c3e70ed10e70c580517401ca991b896cd06b74e52ba62c575455",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/d62231f59e8d4139563d55d27f555368be1649f550fa8c43c01561ff1d71fc19.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:15:19Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T071512Zn0105",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:15:19Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:15:19Z",
+   "role": "document",
+   "sha256": "d62231f59e8d4139563d55d27f555368be1649f550fa8c43c01561ff1d71fc19",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/50bc5323d5dfabedacbab177b2173291782ac315978f389145491b86939d1aea.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:20:30Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T072019Zn0106",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:20:30Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:20:30Z",
+   "role": "document",
+   "sha256": "50bc5323d5dfabedacbab177b2173291782ac315978f389145491b86939d1aea",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/4dcb0d5ec120c8ef8d912d69b75613dc0ab3b7621ecf96456514d03458835982.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:25:42Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T072530Zn0107",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:25:42Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:25:42Z",
+   "role": "document",
+   "sha256": "4dcb0d5ec120c8ef8d912d69b75613dc0ab3b7621ecf96456514d03458835982",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/028d8a209c23794117b4bd64917ee7eb5214c584b3e5682cf1d7e0f69a6e52e5.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:30:59Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T073042Zn0108",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:30:59Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:30:59Z",
+   "role": "document",
+   "sha256": "028d8a209c23794117b4bd64917ee7eb5214c584b3e5682cf1d7e0f69a6e52e5",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/6acc207e04eefbf4507a58b21192eca6a5d286e8c620f7a9ef009d662178e5d7.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:36:06Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T073559Zn0109",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:36:06Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:36:06Z",
+   "role": "document",
+   "sha256": "6acc207e04eefbf4507a58b21192eca6a5d286e8c620f7a9ef009d662178e5d7",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/d6ba0486e6d96543bf5cd31c292e6f2e35770cf732e2d51a3c1bb3eafc10137e.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:41:16Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T074107Zn0110",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:41:16Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:41:16Z",
+   "role": "document",
+   "sha256": "d6ba0486e6d96543bf5cd31c292e6f2e35770cf732e2d51a3c1bb3eafc10137e",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/f442d83bfc5544b6d21a890cc4c5221c268fa2cbbf616242f08744c276f84bf2.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:46:25Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T074616Zn0111",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:46:25Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:46:25Z",
+   "role": "document",
+   "sha256": "f442d83bfc5544b6d21a890cc4c5221c268fa2cbbf616242f08744c276f84bf2",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/72f6819e16cc5841b30af889ca66ee45686171eb25502a564538a5f5998f7374.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:51:28Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T075125Zn0112",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:51:28Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:51:28Z",
+   "role": "document",
+   "sha256": "72f6819e16cc5841b30af889ca66ee45686171eb25502a564538a5f5998f7374",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/1768d0948e3c105e37758a8970004e6d18ee82e63a0823d13d85949e63f33c2f.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T07:56:30Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T075628Zn0113",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T07:56:30Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T07:56:30Z",
+   "role": "document",
+   "sha256": "1768d0948e3c105e37758a8970004e6d18ee82e63a0823d13d85949e63f33c2f",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/4af853996aad5e23b49cde7cc9d66c54019b031d61b62bfd8bf915858c80a9eb.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:01:45Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T080131Zn0114",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:01:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:01:45Z",
+   "role": "document",
+   "sha256": "4af853996aad5e23b49cde7cc9d66c54019b031d61b62bfd8bf915858c80a9eb",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/bbff53b2cdf5df234a598a685ca98d50f0fbfc2807ca9c6a9926e39e4ab3a9d9.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:06:50Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T080646Zn0115",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:06:50Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:06:50Z",
+   "role": "document",
+   "sha256": "bbff53b2cdf5df234a598a685ca98d50f0fbfc2807ca9c6a9926e39e4ab3a9d9",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/01409873b6415b9f1f3934f4edf5f07c73ad5c3bc69f2b9e63ab5b1818893506.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:11:51Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T081151Zn0116",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:11:51Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:11:51Z",
+   "role": "document",
+   "sha256": "01409873b6415b9f1f3934f4edf5f07c73ad5c3bc69f2b9e63ab5b1818893506",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/9a801ca37bfa9a8e177ddb752f0bbb62b575da50b1090160f0bbd4ef70270732.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:17:04Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T081651Zn0117",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:17:04Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:17:04Z",
+   "role": "document",
+   "sha256": "9a801ca37bfa9a8e177ddb752f0bbb62b575da50b1090160f0bbd4ef70270732",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/b2db25efc5f541aef21f9aff8d0a5607b173414307a34d29f223ba56d7ce5170.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:22:13Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T082204Zn0118",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:22:13Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:22:14Z",
+   "role": "document",
+   "sha256": "b2db25efc5f541aef21f9aff8d0a5607b173414307a34d29f223ba56d7ce5170",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/198ab996d0571593bd1b59f2e00cd45ba75f1cfad14857e56f843aa000569c6a.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:27:22Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T082714Zn0119",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:27:22Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:27:22Z",
+   "role": "document",
+   "sha256": "198ab996d0571593bd1b59f2e00cd45ba75f1cfad14857e56f843aa000569c6a",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/1cee07ff03ee093dbcf090590c62bb520b8d06edf81edbc6abbd8215f282605d.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:32:31Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T083222Zn0120",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:32:31Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:32:32Z",
+   "role": "document",
+   "sha256": "1cee07ff03ee093dbcf090590c62bb520b8d06edf81edbc6abbd8215f282605d",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/1000eadbfd96c065501222c8820f5fb9bc5cc1f8a8857d82447cb03603cee656.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:37:32Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T083732Zn0121",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:37:32Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:37:32Z",
+   "role": "document",
+   "sha256": "1000eadbfd96c065501222c8820f5fb9bc5cc1f8a8857d82447cb03603cee656",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/2f3ead99a0b826f4765d5c1873723bd1f5d59e098da5878f811a260f6ecaf5e8.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:42:34Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T084232Zn0122",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:42:34Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:42:34Z",
+   "role": "document",
+   "sha256": "2f3ead99a0b826f4765d5c1873723bd1f5d59e098da5878f811a260f6ecaf5e8",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/0aa1eefa25efa875ce132384d428751bac247250ee582bd4f13355fd8bbc991f.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:47:44Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T084734Zn0123",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:47:44Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:47:44Z",
+   "role": "document",
+   "sha256": "0aa1eefa25efa875ce132384d428751bac247250ee582bd4f13355fd8bbc991f",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/ccbd975ee05237f31f6f106e955d3b1a588ba2a42388a37b857cd839fcc26ad9.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:52:45Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T085245Zn0124",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:52:45Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:52:45Z",
+   "role": "document",
+   "sha256": "ccbd975ee05237f31f6f106e955d3b1a588ba2a42388a37b857cd839fcc26ad9",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/091ee28bf2f55d67702d16ae558442778797229723a5099a4de83d7a3ad780ec.gz",
+   "bytes": 963,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T08:57:54Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T085745Zn0125",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T08:57:54Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T08:57:54Z",
+   "role": "document",
+   "sha256": "091ee28bf2f55d67702d16ae558442778797229723a5099a4de83d7a3ad780ec",
+   "source": "entsoe",
+   "status": 200
+  },
+  {
+   "body": "bodies/f4e6f1319d3d1f665bf9c92eb87057c8dfff84571a61f526dd745ff8132d2397.gz",
+   "bytes": 13606,
+   "covers": [
+    "2026-11-27"
+   ],
+   "document_time_utc": "2026-11-26T09:03:09Z",
+   "error": null,
+   "id": "load_forecast-entsoe-document-00@20261126T090254Zn0126",
+   "input": "load_forecast",
+   "note": "",
+   "origin": "entsoe retrieval",
+   "provenance": "live",
+   "publication": {
+    "2026-11-27": {
+     "basis": "the document's own creation time",
+     "basis_id": "document_time",
+     "utc": "2026-11-26T09:03:09Z"
+    }
+   },
+   "request": {
+    "credential_variable": "ENTSOE_API_TOKEN",
+    "headers": {},
+    "method": "GET",
+    "params": {
+     "documentType": "A65",
+     "outBiddingZone_Domain": "10Y1001A1001A82H",
+     "periodEnd": "202611272300",
+     "periodStart": "202611262300",
+     "processType": "A01"
+    },
+    "range": null,
+    "scope": [
+     "market",
+     "2026-11-27"
+    ],
+    "url": "https://web-api.tp.entsoe.eu/api"
+   },
+   "resolution": "",
+   "retrieved_utc": "2026-11-26T09:03:09Z",
+   "role": "document",
+   "sha256": "f4e6f1319d3d1f665bf9c92eb87057c8dfff84571a61f526dd745ff8132d2397",
+   "source": "entsoe",
+   "status": 200
+  }
+ ],
+ "schema": "cp18-live-archive-day-v1"
+}
